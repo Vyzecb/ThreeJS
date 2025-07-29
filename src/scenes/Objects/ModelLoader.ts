@@ -3,15 +3,17 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 /**
- * Laadt een glTF-/GLB-model zonder Draco-compressie.
- * Zet je .glb in public/models/ en verwijs hier daarnaar.
+ * Laadt een glTF-/GLB-model en retourneert de scene-groep.
+ * Zorg dat je jouw earth.glb in public/models/ hebt geplaatst.
  */
 export const loadModel = (url: string): Promise<THREE.Group> =>
   new Promise((resolve, reject) => {
     const loader = new GLTFLoader();
+
     loader.load(
       url,
       (gltf) => {
+        // Zorg dat alle meshes schaduwen casten/ontvangen
         gltf.scene.traverse((obj) => {
           if ((obj as THREE.Mesh).isMesh) {
             obj.castShadow = true;
@@ -21,6 +23,9 @@ export const loadModel = (url: string): Promise<THREE.Group> =>
         resolve(gltf.scene);
       },
       undefined,
-      (err) => reject(err)
+      (err) => {
+        console.error('Fout bij laden model:', err);
+        reject(err);
+      }
     );
   });
