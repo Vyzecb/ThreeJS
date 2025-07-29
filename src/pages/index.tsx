@@ -1,5 +1,7 @@
 // src/pages/index.tsx
+import dynamic from 'next/dynamic'
 import React, { useEffect } from 'react'
+import * as THREE from 'three'
 import Layout from '@/components/Layout'
 import { useThreeScene } from '@/hooks/useThreeScene'
 import { introAnimation } from '@/animations/introAnimation'
@@ -8,7 +10,8 @@ import { loadModel } from '@/scenes/Objects/ModelLoader'
 import { createFloatingLogo } from '@/scenes/Objects/FloatingLogo'
 import Loader from '@/components/Loader'
 
-const Home: React.FC = () => {
+// --- Dit is je “page component”, maar NIET direct geëxporteerd ---
+const HomeContent: React.FC = () => {
   const { canvasRef, sceneManager } = useThreeScene()
 
   useEffect(() => {
@@ -17,28 +20,26 @@ const Home: React.FC = () => {
     // 1) Hero intro animatie
     introAnimation()
 
-    // 2) Laad jouw earth-model
+    // 2) Laad je earth.glb
     sceneManager
       .addModel('/models/earth.glb')
       .catch((err) => console.error('Kon earth.glb niet laden:', err))
 
-    // 3) Voeg draaiend logo-object toe
+    // 3) Voeg draaiend logo toe
     createFloatingLogo({ text: 'Luxe3D' })
       .then((logo) => sceneManager.scene.add(logo))
       .catch(console.error)
 
-    // 4) Scroll-animations voor secties onder de hero
+    // 4) Activeer je scroll-animaties
     scrollAnimations()
   }, [sceneManager])
 
   return (
     <Layout>
-      {/* Hero-sectie */}
+      {/* Hero */}
       <div className="relative w-full h-screen md:h-[80vh]">
         <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
         <Loader />
-
-        {/* Overlay content */}
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-playfair text-secondary drop-shadow-lg">
             Welkom bij de Luxe 3D Ervaring
@@ -59,7 +60,7 @@ const Home: React.FC = () => {
         </div>
       </div>
 
-      {/* Introductie-sectie onder de hero */}
+      {/* Introductie-sectie */}
       <section
         id="intro-section"
         className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-secondary text-primary flex flex-col md:flex-row items-center"
@@ -79,4 +80,8 @@ const Home: React.FC = () => {
   )
 }
 
-export default Home
+// --- En dit is de export, met SSR uitgeschakeld ---
+export default dynamic(
+  () => Promise.resolve(HomeContent),
+  { ssr: false }
+)
