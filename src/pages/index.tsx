@@ -1,37 +1,47 @@
 // src/pages/index.tsx
-import React, { useEffect } from 'react';
-import Layout from '@/components/Layout';
-import { useThreeScene } from '@/hooks/useThreeScene';
-import { introAnimation } from '@/animations/introAnimation';
-import { scrollAnimations } from '@/animations/scrollAnimations';
-import { loadModel } from '@/scenes/Objects/ModelLoader';
-import { createFloatingLogo } from '@/scenes/Objects/FloatingLogo';
-import Loader from '@/components/Loader';
+import React, { useEffect } from 'react'
+import Layout from '@/components/Layout'
+import { useThreeScene } from '@/hooks/useThreeScene'
+import { introAnimation } from '@/animations/introAnimation'
+import { scrollAnimations } from '@/animations/scrollAnimations'
+import { loadModel } from '@/scenes/Objects/ModelLoader'
+import { createFloatingLogo } from '@/scenes/Objects/FloatingLogo'
+import Loader from '@/components/Loader'
 
 const Home: React.FC = () => {
-  const { canvasRef, sceneManager } = useThreeScene();
+  const { canvasRef, sceneManager } = useThreeScene()
 
   useEffect(() => {
-    if (!sceneManager) return;
+    if (!sceneManager) return
 
-    introAnimation();
+    // 1) Hero intro animatie
+    introAnimation()
 
+    // 2) Laad jouw earth-model
     sceneManager
-      .addModel('/models/earth.glb')  // <— pas hier je bestandsnaam aan
-      .catch(console.error);
+      .addModel('/models/earth.glb')
+      .catch(console.error)
 
+    // 3) Voeg draaiend logo-object toe
     createFloatingLogo({ text: 'Luxe3D' })
       .then((logo) => sceneManager.scene.add(logo))
-      .catch(console.error);
+      .catch(console.error)
 
-    scrollAnimations();
-  }, [sceneManager]);
+    // 4) Scroll-animations voor secties onder de hero
+    scrollAnimations()
+  }, [sceneManager])
 
   return (
     <Layout>
+      {/* Hero-sectie */}
       <div className="relative w-full h-screen md:h-[80vh]">
-        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
+        <canvas
+          ref={canvasRef}
+          className="absolute inset-0 w-full h-full"
+        />
         <Loader />
+
+        {/* Overlay content */}
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-playfair text-secondary drop-shadow-lg">
             Welkom bij de Luxe 3D Ervaring
@@ -51,9 +61,27 @@ const Home: React.FC = () => {
           </button>
         </div>
       </div>
-      {/* … rest van je pagina … */}
-    </Layout>
-  );
-};
 
-export default Home;
+      {/* Introductie-sectie onder de hero */}
+      <section
+        id="intro-section"
+        className="section bg-secondary text-primary flex flex-col md:flex-row items-center"
+      >
+        <div className="md:w-1/2 px-4 mb-8 md:mb-0">
+          <h2 className="text-3xl sm:text-4xl font-playfair mb-4">
+            Onze Missie
+          </h2>
+          <p className="text-base sm:text-lg leading-relaxed">
+            Bij Luxe3D combineren we art-direction met cutting-edge webtechnologieën om
+            een onvergetelijke gebruikerservaring te creëren, op elk apparaat.
+          </p>
+        </div>
+        <div className="md:w-1/2 px-4">
+          <div className="w-full h-64 bg-neutral-light rounded-lg shadow-md" />
+        </div>
+      </section>
+    </Layout>
+  )
+}
+
+export default Home
