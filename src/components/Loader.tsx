@@ -1,12 +1,28 @@
+// src/components/Loader.tsx
 import React, { useEffect } from 'react';
 import { gsap } from 'gsap';
 
 const Loader: React.FC = () => {
   useEffect(() => {
     const tl = gsap.timeline();
-    tl.to('.loader-circle', { scale: 1, autoAlpha: 1, duration: 0.6, ease: 'power1.inOut' })
-      .to('.loader-circle', { scale: 0.5, autoAlpha: 0.3, duration: 0.6, ease: 'power1.inOut', repeat: -1, yoyo: true });
-    return () => tl.kill();
+    tl.to('.loader-circle', {
+      scale: 1,
+      autoAlpha: 1,
+      duration: 0.6,
+      ease: 'power1.inOut',
+    })
+      .to('.loader-circle', {
+        scale: 0.5,
+        autoAlpha: 0.3,
+        duration: 0.6,
+        ease: 'power1.inOut',
+        repeat: -1,
+        yoyo: true,
+      });
+
+    return () => {
+      tl.kill(); // cleanup zonder een return-waarde
+    };
   }, []);
 
   return (
