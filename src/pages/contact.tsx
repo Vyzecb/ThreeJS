@@ -13,47 +13,59 @@ const Contact: React.FC = () => {
 
   return (
     <Layout>
-      <section className="py-24 px-6 max-w-xl mx-auto">
-        <h2 className="text-4xl font-playfair mb-6">Contact</h2>
+      <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-playfair mb-8 text-center">
+          Contact
+        </h2>
+
         {submitted ? (
-          <p className="text-lg text-green-600">
+          <p className="text-lg sm:text-xl text-green-600 text-center">
             Bedankt voor je bericht! We nemen snel contact op.
           </p>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block mb-1">Naam</label>
-              <input
-                type="text"
-                required
-                className="w-full border border-gray-300 p-2 rounded"
-                onMouseEnter={(e) => hoverEffects(e.currentTarget)}
-              />
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Naam & E-mail in twee kolommen op md+ */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium mb-2">Naam</label>
+                <input
+                  type="text"
+                  required
+                  className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent transition"
+                  onMouseEnter={(e) => hoverEffects(e.currentTarget)}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">E-mail</label>
+                <input
+                  type="email"
+                  required
+                  className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent transition"
+                  onMouseEnter={(e) => hoverEffects(e.currentTarget)}
+                />
+              </div>
             </div>
+
+            {/* Bericht */}
             <div>
-              <label className="block mb-1">E-mail</label>
-              <input
-                type="email"
-                required
-                className="w-full border border-gray-300 p-2 rounded"
-                onMouseEnter={(e) => hoverEffects(e.currentTarget)}
-              />
-            </div>
-            <div>
-              <label className="block mb-1">Bericht</label>
+              <label className="block text-sm font-medium mb-2">Bericht</label>
               <textarea
                 required
-                className="w-full border border-gray-300 p-2 rounded h-32"
+                className="w-full border border-gray-300 rounded-lg px-4 py-2 h-40 resize-none focus:outline-none focus:ring-2 focus:ring-accent transition"
                 onMouseEnter={(e) => hoverEffects(e.currentTarget)}
               />
             </div>
-            <button
-              type="submit"
-              className="px-6 py-3 bg-primary text-secondary font-semibold rounded shadow hover:opacity-90 transition"
-              onMouseEnter={(e) => hoverEffects(e.currentTarget)}
-            >
-              Verzend
-            </button>
+
+            {/* Verzenden */}
+            <div className="text-center">
+              <button
+                type="submit"
+                className="w-full sm:w-auto px-8 py-3 bg-accent text-secondary font-semibold rounded-full shadow-lg hover:opacity-90 transition"
+                onMouseEnter={(e) => hoverEffects(e.currentTarget)}
+              >
+                Verzend
+              </button>
+            </div>
           </form>
         )}
       </section>
