@@ -95,7 +95,7 @@ const HomeContent: React.FC = () => {
           <div>
             <div className="w-full h-64 sm:h-80 bg-neutral-light rounded-lg shadow-lg overflow-hidden">
               <img
-                src="public/images/a4e57a98-1d38-409d-937f-b035bff6fdb3.jpeg"
+                src="images/a4e57a98-1d38-409d-937f-b035bff6fdb3.jpeg"
                 alt="3D scene preview"
                 className="w-full h-full object-cover"
               />
