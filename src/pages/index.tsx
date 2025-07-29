@@ -65,6 +65,9 @@ const Home: React.FC = () => {
           </button>
         </div>
       </div>
+      {/* in je Home of Layout */}
+<div className="bg-red-500 text-white p-4">🐞 Tailwind werkt!</div>
+
 
       {/* Introductie-sectie onder de hero */}
       <section
