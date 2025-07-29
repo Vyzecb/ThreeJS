@@ -1,3 +1,4 @@
+// src/context/ThemeContext.tsx
 import React, { createContext, ReactNode, useState, useEffect } from 'react';
 
 type Theme = 'light' | 'dark';
@@ -21,7 +22,7 @@ type ThemeProviderProps = {
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const [theme, setTheme] = useState<Theme>('light');
 
-  // Bij laden: voorkeur uit localStorage of mediavraag
+  // Bij laden: voorkeur uit localStorage of systeeminstelling
   useEffect(() => {
     const saved = localStorage.getItem('theme') as Theme | null;
     if (saved) {
@@ -31,13 +32,20 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     }
   }, []);
 
-  // Synchroniseer HTML attribuut en localStorage
+  // Synchroniseer html.dark-klasse en localStorage
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
+    const html = document.documentElement;
+    if (theme === 'dark') {
+      html.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      html.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
   }, [theme]);
 
-  const toggleTheme = () => setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+  const toggleTheme = () =>
+    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
