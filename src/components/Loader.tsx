@@ -21,13 +21,21 @@ const Loader: React.FC = () => {
       });
 
     return () => {
-      tl.kill(); // cleanup zonder een return-waarde
+      tl.kill();
     };
   }, []);
 
   return (
-    <div className="loader fixed inset-0 flex items-center justify-center bg-secondary/80 z-40">
-      <div className="loader-circle w-16 h-16 rounded-full bg-primary opacity-0 scale-0" />
+    <div className="loader fixed inset-0 flex items-center justify-center bg-secondary/80 z-40 p-4 sm:p-0">
+      <div
+        className="
+          loader-circle
+          w-12 h-12 sm:w-16 sm:h-16
+          rounded-full
+          bg-primary
+          opacity-0 scale-0
+        "
+      />
     </div>
   );
 };
