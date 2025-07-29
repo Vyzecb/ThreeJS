@@ -105,33 +105,37 @@ const HomeContent: React.FC = () => {
       </section>
 
       {/* Team Sectie */}
-      <section className="py-16 sm:py-20 bg-white">
-        <div className="container mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h3 className="font-heading text-2xl sm:text-3xl md:text-4xl mb-8">
-            Ons Team
-          </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {['Alice', 'Bob', 'Carol'].map((name) => (
-              <div
-                key={name}
-                className="bg-secondary/50 backdrop-blur-sm p-6 rounded-lg shadow-md hover:shadow-lg transition"
-              >
-                <div className="w-24 h-24 mx-auto mb-4 bg-neutral-light rounded-full overflow-hidden">
-                  <img
-                    src={`/assets/team/${name.toLowerCase()}.jpg`}
-                    alt={name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <h4 className="font-heading text-xl mb-2">{name}</h4>
-                <p className="text-sm text-neutral-dark">
-                  3D-Art & Webmagic Specialist
-                </p>
-              </div>
-            ))}
+<section className="py-16 sm:py-20 bg-secondary text-primary">
+  <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <h3 className="font-heading text-2xl sm:text-3xl md:text-4xl mb-8 text-center">
+      Ons Team
+    </h3>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      {[
+        { name: 'Alice', img: '/assets/team/alice.jpg' },
+        { name: 'Bob',   img: '/assets/team/bob.jpg'   },
+        { name: 'Carol', img: '/assets/team/carol.jpg' },
+      ].map(({ name, img }) => (
+        <div
+          key={name}
+          className="bg-white rounded-lg shadow-lg hover:shadow-2xl transition p-6 flex flex-col items-center"
+        >
+          <div className="w-24 h-24 mb-4 rounded-full overflow-hidden border-4 border-accent">
+            <img
+              src={img}
+              alt={name}
+              className="w-full h-full object-cover"
+            />
           </div>
+          <h4 className="font-heading text-xl mb-1 text-primary">{name}</h4>
+          <p className="text-sm text-gray-600 text-center">
+            3D-Art & Webmagic Specialist
+          </p>
         </div>
-      </section>
+      ))}
+    </div>
+  </div>
+</section>
     </Layout>
   )
 }
