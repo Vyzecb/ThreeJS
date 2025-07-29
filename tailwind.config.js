@@ -1,6 +1,7 @@
+// tailwind.config.js
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: 'class',              // activeer class-based dark mode
+  darkMode: 'class',        // of 'media' als je dat liever hebt
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx}',
     './src/components/**/*.{js,ts,jsx,tsx}',
@@ -14,19 +15,10 @@ module.exports = {
         primary: 'var(--color-primary)',
         secondary: 'var(--color-secondary)',
         accent: 'var(--color-accent)',
-        'neutral-dark': 'var(--color-neutral-dark)',
-        'neutral-light': 'var(--color-neutral-light)',
       },
       fontFamily: {
         heading: ['var(--font-heading)'],
         body: ['var(--font-body)'],
-      },
-      boxShadow: {
-        glow: '0 0 20px rgba(197, 157, 95, 0.5)',
-      },
-      container: {
-        center: true,
-        padding: '2rem',
       },
     },
   },
