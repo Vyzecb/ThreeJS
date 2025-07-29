@@ -1,5 +1,6 @@
 // src/pages/index.tsx
-import React, { useEffect } from 'react'
+import dynamic from 'next/dynamic'
+import React, { useEffect, useState } from 'react'
 import Layout from '@/components/Layout'
 import { useThreeScene } from '@/hooks/useThreeScene'
 import { introAnimation } from '@/animations/introAnimation'
@@ -7,33 +8,39 @@ import { scrollAnimations } from '@/animations/scrollAnimations'
 import { loadModel } from '@/scenes/Objects/ModelLoader'
 import { createFloatingLogo } from '@/scenes/Objects/FloatingLogo'
 import Loader from '@/components/Loader'
+import ScrollIndicator from '@/components/ScrollIndicator'
 
-const Home: React.FC = () => {
+const HomeContent: React.FC = () => {
   const { canvasRef, sceneManager } = useThreeScene()
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     if (!sceneManager) return
 
-    // start hero intro
+    // 1) Hero intro animatie
     introAnimation()
 
-    // laad earth model
+    // 2) Laad Earth GLB
     sceneManager
       .addModel('/models/earth.glb')
-      .catch((err) => console.error('Kon earth.glb niet laden:', err))
+      .then(() => setLoading(false))
+      .catch((err) => {
+        console.error('Kon earth.glb niet laden:', err)
+        setLoading(false)
+      })
 
-    // draaiend logo
+    // 3) Draaiend logo
     createFloatingLogo({ text: 'Luxe3D' })
       .then((logo) => sceneManager.scene.add(logo))
       .catch(console.error)
 
-    // scroll animaties
+    // 4) Scroll‐animations onder de hero
     scrollAnimations()
   }, [sceneManager])
 
   return (
     <Layout>
-      {/* Hero-sectie */}
+      {/* Hero */}
       <div className="relative w-full h-screen md:h-[80vh] flex items-center justify-center overflow-hidden">
         {/* Three.js canvas */}
         <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
@@ -41,8 +48,8 @@ const Home: React.FC = () => {
         {/* Donkere overlay */}
         <div className="absolute inset-0 bg-black/30 pointer-events-none" />
 
-        {/* Loader */}
-        <Loader />
+        {/* Loader: toont zolang loading==true */}
+        {loading && <Loader />}
 
         {/* Hero content */}
         <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8">
@@ -65,6 +72,9 @@ const Home: React.FC = () => {
             </button>
           </div>
         </div>
+
+        {/* Scroll-indicator */}
+        <ScrollIndicator />
       </div>
 
       {/* Intro Sectie */}
@@ -126,4 +136,7 @@ const Home: React.FC = () => {
   )
 }
 
-export default Home
+// Force client-side only to avoid hydration errors
+export default dynamic(() => Promise.resolve(HomeContent), {
+  ssr: false,
+})
