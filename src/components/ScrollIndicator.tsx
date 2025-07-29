@@ -8,16 +8,11 @@ const ScrollIndicator: React.FC = () => {
   useEffect(() => {
     if (!arrowRef.current) return
 
-    const tl = gsap.timeline({
-      repeat: -1,
-      yoyo: true,
-      defaults: { ease: 'power1.inOut' },
-    })
-
+    const tl = gsap.timeline({ repeat: -1, yoyo: true, defaults: { ease: 'power1.inOut' } })
     tl.to(arrowRef.current, { y: 10, autoAlpha: 1, duration: 0.8 })
       .to(arrowRef.current, { y: 0, autoAlpha: 0.5, duration: 0.8 })
 
-    // correct: block-body arrow-function, retourneert undefined
+    // **Zet hier blokhaken zodat de cleanup écht void returned**
     return () => {
       tl.kill()
     }
