@@ -1,3 +1,4 @@
+// src/components/ScrollIndicator.tsx
 import React, { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 
@@ -7,15 +8,19 @@ const ScrollIndicator: React.FC = () => {
   useEffect(() => {
     if (!arrowRef.current) return
 
-    const tl = gsap.timeline({ repeat: -1, yoyo: true, defaults: { ease: 'power1.inOut' } })
-
-    tl.to(arrowRef.current, { y: 10, autoAlpha: 1, duration: 0.8 }).to(arrowRef.current, {
-      y: 0,
-      autoAlpha: 0.5,
-      duration: 0.8,
+    const tl = gsap.timeline({
+      repeat: -1,
+      yoyo: true,
+      defaults: { ease: 'power1.inOut' },
     })
 
-    return () => tl.kill()
+    tl.to(arrowRef.current, { y: 10, autoAlpha: 1, duration: 0.8 })
+      .to(arrowRef.current, { y: 0, autoAlpha: 0.5, duration: 0.8 })
+
+    // **Correcte cleanup zonder return-waarde**
+    return () => {
+      tl.kill()
+    }
   }, [])
 
   return (
