@@ -1,7 +1,6 @@
-// tailwind.config.js
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: 'class',        // of 'media' als je dat liever hebt
+  darkMode: 'class',   // <-- we’ll use the .dark class on <html>
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx}',
     './src/components/**/*.{js,ts,jsx,tsx}',
@@ -12,13 +11,15 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: 'var(--color-primary)',
-        secondary: 'var(--color-secondary)',
-        accent: 'var(--color-accent)',
+        primary:        'var(--color-primary)',
+        secondary:      'var(--color-secondary)',
+        accent:         'var(--color-accent)',
+        'neutral-dark': 'var(--color-neutral-dark)',
+        'neutral-light':'var(--color-neutral-light)',
       },
       fontFamily: {
         heading: ['var(--font-heading)'],
-        body: ['var(--font-body)'],
+        body:    ['var(--font-body)'],
       },
     },
   },
