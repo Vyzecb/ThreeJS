@@ -17,7 +17,7 @@ const ScrollIndicator: React.FC = () => {
     tl.to(arrowRef.current, { y: 10, autoAlpha: 1, duration: 0.8 })
       .to(arrowRef.current, { y: 0, autoAlpha: 0.5, duration: 0.8 })
 
-    // **Correcte cleanup zonder return-waarde**
+    // correct: block-body arrow-function, retourneert undefined
     return () => {
       tl.kill()
     }
