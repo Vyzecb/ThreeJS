@@ -18,7 +18,7 @@ const Home: React.FC = () => {
 
     // 2) Laad glTF-scène
     sceneManager
-      .addModel('/models/luxury-scene.glb')
+      .addModel('/models/earth.glb')
       .catch(console.error);
 
     // 3) Voeg draaiend logo-object toe
