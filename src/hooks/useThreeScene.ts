@@ -1,49 +1,39 @@
-import { useRef, useEffect, MutableRefObject } from 'react';
-import * as THREE from 'three';
-import { SceneManager } from '@/scenes/SceneManager';
+import { useRef, useEffect, useState } from 'react'
+import { SceneManager } from '@/scenes/SceneManager'
+import type * as THREE from 'three'
 
-interface ThreeScene {
-  canvasRef: MutableRefObject<HTMLCanvasElement | null>;
-  sceneManager: SceneManager | null;
+export interface ThreeSceneReturn {
+  canvasRef: React.RefObject<HTMLCanvasElement>
+  sceneManager: SceneManager | null
 }
 
-/**
- * Hook voor initialisatie van een Three.js-scene + render-loop.
- * @returns refs en SceneManager-instance voor verdere interactie.
- */
-export const useThreeScene = (): ThreeScene => {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const sceneManagerRef = useRef<SceneManager | null>(null);
+export const useThreeScene = (): ThreeSceneReturn => {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const [sceneManager, setSceneManager] = useState<SceneManager | null>(null)
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+    const canvas = canvasRef.current
+    if (!canvas) return
 
-    // SCENE MANAGER opzetten
-    const manager = new SceneManager(canvas);
-    sceneManagerRef.current = manager;
+    // Maak de manager aan en exposeer hem via state
+    const manager = new SceneManager(canvas)
+    setSceneManager(manager)
 
-    // Voeg basislicht toe
-    const { ambient, point } = manager.addLights();
-    manager.scene.add(ambient, point);
+    // Voeg basislichten toe
+    manager.addLights()
 
     // Start de render-loop
-    manager.start();
+    manager.start()
 
-    // Resizen
-    const onResize = () => {
-      manager.onWindowResize();
-    };
-    window.addEventListener('resize', onResize);
+    // Resize-handler
+    const onResize = () => manager.onWindowResize()
+    window.addEventListener('resize', onResize)
 
     return () => {
-      window.removeEventListener('resize', onResize);
-      manager.dispose();
-    };
-  }, []);
+      window.removeEventListener('resize', onResize)
+      manager.dispose()
+    }
+  }, [])
 
-  return {
-    canvasRef,
-    sceneManager: sceneManagerRef.current,
-  };
-};
+  return { canvasRef, sceneManager }
+}
