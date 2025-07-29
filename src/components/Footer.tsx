@@ -30,6 +30,11 @@ const Footer: React.FC = () => (
           Dribbble
         </a>
       </div>
+      <div className="text-center text-xs text-gray-500 py-4 border-t border-gray-700">
+        © {new Date().getFullYear()} Alle rechten voorbehouden.
+        <br/>
+        Website made by: <a href="https://www.voswebdesigns.nl" className="text-blue-400 hover:underline" target="_blank" rel="noopener noreferrer">Vos Web Designs</a>
+      </div>
     </div>
   </footer>
 )
