@@ -62,10 +62,10 @@ const AboutContent: React.FC = () => {
         </div>
       </section>
 
-      {/* Team */}
-      <section className="bg-secondary text-primary py-16 sm:py-24 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-5xl mx-auto">
-          <h3 className="text-2xl sm:text-3xl font-heading mb-6 text-center fade-up text-primary">
+      {/* Ons Team */}
+      <section className="py-16 sm:py-20 bg-white text-primary">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <h3 className="font-heading text-3xl sm:text-4xl md:text-5xl mb-8 text-center text-primary fade-up">
             Ons Team
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -76,21 +76,18 @@ const AboutContent: React.FC = () => {
             ].map(({ name, img }) => (
               <div
                 key={name}
-                className="relative bg-secondary/50 backdrop-blur-sm p-6 rounded-lg text-center fade-up"
+                className="bg-white rounded-lg shadow-lg hover:shadow-2xl transition p-6 flex flex-col items-center fade-up"
               >
-                {/* witte vierkant achter de cirkel */}
-                <div className="absolute top-6 left-1/2 w-28 h-28 -translate-x-1/2 bg-white rounded-lg"></div>
-                {/* cirkel met foto */}
-                <div className="relative w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-accent z-10">
+                <div className="w-24 h-24 mb-4 rounded-full overflow-hidden border-4 border-accent">
                   <img
                     src={img}
                     alt={name}
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <h4 className="text-lg font-semibold text-primary">{name}</h4>
-                <p className="text-sm mt-2 text-neutral-dark">
-                  3D Artist
+                <h4 className="font-heading text-xl mb-1 text-primary">{name}</h4>
+                <p className="text-sm text-gray-600 text-center">
+                  3D-Art & Webmagic Specialist
                 </p>
               </div>
             ))}
