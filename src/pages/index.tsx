@@ -6,8 +6,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Layout from '@/components/Layout'
 import { useThreeScene } from '@/hooks/useThreeScene'
 import { introAnimation } from '@/animations/introAnimation'
-import { loadModel } from '@/scenes/Objects/ModelLoader'
 import { createFloatingLogo } from '@/scenes/Objects/FloatingLogo'
+import { loadModel } from '@/scenes/Objects/ModelLoader'
 import Loader from '@/components/Loader'
 import ScrollIndicator from '@/components/ScrollIndicator'
 
@@ -20,36 +20,36 @@ const HomeContent: React.FC = () => {
   useEffect(() => {
     if (!sceneManager) return
 
-    // 1) Hero intro animatie
+    // 1) Hero intro
     introAnimation()
 
-    // 2) Laad Earth GLB
+    // 2) Load earth model
     sceneManager
       .addModel('/models/earth.glb')
       .then(() => setLoading(false))
-      .catch((err) => {
-        console.error('Kon earth.glb niet laden:', err)
+      .catch((e) => {
+        console.error('Failed to load earth.glb', e)
         setLoading(false)
       })
 
-    // 3) Draaiend logo
+    // 3) Floating logo
     createFloatingLogo({ text: 'Luxe3D' })
       .then((logo) => sceneManager.scene.add(logo))
       .catch(console.error)
 
-    // 4) Scroll‐trigger animaties voor alle .fade-up elementen
+    // 4) Fade-up on scroll for everything with .fade-up
     gsap.utils.toArray<HTMLElement>('.fade-up').forEach((el) => {
       gsap.from(el, {
         scrollTrigger: {
           trigger: el,
-          start: 'top 80%',
+          start: 'top bottom-=100px',     // fire when 100px into view
           toggleActions: 'play none none none',
+          once: true,
         },
         y: 50,
         autoAlpha: 0,
         duration: 1,
         ease: 'power2.out',
-        stagger: 0.2,
       })
     })
   }, [sceneManager])
@@ -91,7 +91,7 @@ const HomeContent: React.FC = () => {
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="fade-up">
-            <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl mb-4">
+            <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl mb-4 text-primary">
               Onze Missie
             </h2>
             <p className="text-neutral-dark leading-relaxed text-base sm:text-lg">
@@ -114,7 +114,7 @@ const HomeContent: React.FC = () => {
       {/* Ons Team */}
       <section className="py-16 sm:py-20 bg-white text-primary">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <h3 className="font-heading text-3xl sm:text-4xl md:text-5xl mb-8 text-center fade-up">
+          <h3 className="font-heading text-3xl sm:text-4xl md:text-5xl mb-8 text-center text-primary fade-up">
             Ons Team
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -147,7 +147,7 @@ const HomeContent: React.FC = () => {
   )
 }
 
-// Render client-side only to avoid hydration errors
+// Client‐side only to skip hydration
 export default dynamic(() => Promise.resolve(HomeContent), {
   ssr: false,
 })
