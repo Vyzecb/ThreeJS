@@ -10,18 +10,20 @@ gsap.registerPlugin(ScrollTrigger)
 const AboutContent: React.FC = () => {
   useEffect(() => {
     const elems = gsap.utils.toArray<HTMLElement>('.fade-up')
-    gsap.from(elems, {
-      scrollTrigger: {
-        trigger: elems,
-        start: 'top bottom-=100px',
-        toggleActions: 'play none none none',
-        once: true,
-      },
-      y: 40,
-      autoAlpha: 0,
-      duration: 1.5,
-      ease: 'power2.out',
-      stagger: 0.3,
+
+    elems.forEach((el) => {
+      gsap.from(el, {
+        scrollTrigger: {
+          trigger: el,
+          start: 'top bottom-=100px',
+          toggleActions: 'play none none none',
+          once: true,
+        },
+        y: 40,
+        autoAlpha: 0,
+        duration: 1.5,
+        ease: 'power2.out',
+      })
     })
   }, [])
 
