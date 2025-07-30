@@ -9,20 +9,20 @@ gsap.registerPlugin(ScrollTrigger)
 
 const AboutContent: React.FC = () => {
   useEffect(() => {
-    // Fade-up animatie voor alle elementen met .fade-up
-    gsap.utils.toArray<HTMLElement>('.fade-up').forEach((el) => {
-      gsap.from(el, {
-        scrollTrigger: {
-          trigger: el,
-          start: 'top bottom-=100px',
-          toggleActions: 'play none none none',
-          once: true,
-        },
-        y: 40,
-        autoAlpha: 0,
-        duration: 0.8,
-        ease: 'power2.out',
-      })
+    const elems = gsap.utils.toArray<HTMLElement>('.fade-up')
+
+    gsap.from(elems, {
+      scrollTrigger: {
+        trigger: elems,
+        start: 'top bottom-=100px',
+        toggleActions: 'play none none none',
+        once: true,
+      },
+      y: 40,
+      autoAlpha: 0,
+      duration: 1.5,       // ❗️ Duurt nu 1.5s in plaats van 0.8s
+      ease: 'power2.out',
+      stagger: 0.3,        // ❗️ Elke volgende 0.3s later
     })
   }, [])
 
@@ -54,7 +54,6 @@ const AboutContent: React.FC = () => {
             </p>
           </div>
           <div className="fade-up">
-            {/* Vervang dit pad door je eigen afbeelding in /public/assets */}
             <img
               src="/images/a4e57a98-1d38-409d-937f-b035bff6fdb3.jpeg"
               alt="Onze Missie Visual"
@@ -67,7 +66,7 @@ const AboutContent: React.FC = () => {
       {/* Team */}
       <section className="bg-secondary text-primary py-16 sm:py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto">
-          <h3 className="text-2xl sm:text-3xl font-heading mb-6 text-center fade-up">
+          <h3 className="text-2xl sm:text-3xl font-heading mb-6 text-center fade-up text-primary">
             Ons Team
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -100,7 +99,7 @@ const AboutContent: React.FC = () => {
   )
 }
 
-// Client‐side only to avoid SSR/hydration issues
+// Client‐side only om SSR/hydration‐issues te vermijden
 export default dynamic(() => Promise.resolve(AboutContent), {
   ssr: false,
 })
