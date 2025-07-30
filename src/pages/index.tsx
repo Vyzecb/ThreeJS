@@ -102,7 +102,7 @@ const HomeContent: React.FC = () => {
           <div className="fade-up">
             <div className="w-full h-64 sm:h-80 bg-neutral-light rounded-lg shadow-lg overflow-hidden">
               <img
-                src="/assets/scene-preview.jpg"
+                src="/images/a4e57a98-1d38-409d-937f-b035bff6fdb3.jpeg"
                 alt="3D scene preview"
                 className="w-full h-full object-cover"
               />
@@ -119,9 +119,9 @@ const HomeContent: React.FC = () => {
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
-              { name: 'Alice', img: '/assets/team/alice.jpg' },
-              { name: 'Bob', img: '/assets/team/bob.jpg' },
-              { name: 'Carol', img: '/assets/team/carol.jpg' },
+              { name: 'Alice', img: '/images/a4e57a98-1d38-409d-937f-b035bff6fdb3.jpeg' },
+              { name: 'Bob', img: '/images/a4e57a98-1d38-409d-937f-b035bff6fdb3.jpeg' },
+              { name: 'Carol', img: '/images/a4e57a98-1d38-409d-937f-b035bff6fdb3.jpeg' },
             ].map(({ name, img }) => (
               <div
                 key={name}
