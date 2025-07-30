@@ -10,7 +10,6 @@ gsap.registerPlugin(ScrollTrigger)
 const AboutContent: React.FC = () => {
   useEffect(() => {
     const elems = gsap.utils.toArray<HTMLElement>('.fade-up')
-
     gsap.from(elems, {
       scrollTrigger: {
         trigger: elems,
@@ -20,9 +19,9 @@ const AboutContent: React.FC = () => {
       },
       y: 40,
       autoAlpha: 0,
-      duration: 1.5,       // ❗️ Duurt nu 1.5s in plaats van 0.8s
+      duration: 1.5,
       ease: 'power2.out',
-      stagger: 0.3,        // ❗️ Elke volgende 0.3s later
+      stagger: 0.3,
     })
   }, [])
 
@@ -72,14 +71,17 @@ const AboutContent: React.FC = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               { name: 'Alice', img: '/images/a4e57a98-1d38-409d-937f-b035bff6fdb3.jpeg' },
-              { name: 'Bob',   img: '/images/a4e57a98-1d38-409d-937f-b035bff6fdb3.jpeg'   },
+              { name: 'Bob', img: '/images/a4e57a98-1d38-409d-937f-b035bff6fdb3.jpeg' },
               { name: 'Carol', img: '/images/a4e57a98-1d38-409d-937f-b035bff6fdb3.jpeg' },
             ].map(({ name, img }) => (
               <div
                 key={name}
-                className="bg-secondary/50 backdrop-blur-sm p-6 rounded-lg text-center fade-up"
+                className="relative bg-secondary/50 backdrop-blur-sm p-6 rounded-lg text-center fade-up"
               >
-                <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-accent">
+                {/* witte vierkant achter de cirkel */}
+                <div className="absolute top-6 left-1/2 w-28 h-28 -translate-x-1/2 bg-white rounded-lg"></div>
+                {/* cirkel met foto */}
+                <div className="relative w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-accent z-10">
                   <img
                     src={img}
                     alt={name}
@@ -99,7 +101,7 @@ const AboutContent: React.FC = () => {
   )
 }
 
-// Client‐side only om SSR/hydration‐issues te vermijden
+// client-side only to avoid hydration issues
 export default dynamic(() => Promise.resolve(AboutContent), {
   ssr: false,
 })
